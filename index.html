@@ -53,11 +53,10 @@
             <img src="public/cats/fishing cat.PNG" alt="">
         </div>
     </main>
-    <footer>
-        <a href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=cvejqqmh71ma56bg5djjj4cmxefqt0&redirect_uri=https://d2baao21cgila9.cloudfront.net&scope=chat%3Aread">Connect to Twitch</a>
-        <input type="text" id="chatText" placeholder="Enter chat text">
-        <button id="send">Send!</button>
-    </footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+    </script>
     <script src="public/script.js"></script>
 </body>
 
