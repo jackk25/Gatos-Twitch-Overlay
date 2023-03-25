@@ -8,9 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const WebSocketClient = require('websocket').client;
 const client = new WebSocketClient();
-
 const fetch = require('node-fetch');
-
 require('dotenv').config();
 
 const params = new URLSearchParams();
@@ -21,42 +19,55 @@ params.append('grant_type', 'authorization_code');
 params.append('redirect_uri', "http://localhost:3000");
 
 var accessToken = null;
-var refreshToken = null;
-var expires_in = null;
 
-fetch('https://id.twitch.tv/oauth2/token', {
-    method: 'POST',
-    body: params
-}).then(
-    (response) => {
-        return response.json();
-    }
-).then(
-    (json) => {
-        console.log(json);
-        if(accessToken == null) {
-        accessToken = json.access_token;
+async function init(dst) {
+    const response = await fetch('https://id.twitch.tv/oauth2/token', {
+        method: 'POST',
+        body: new URLSearchParams({
+            client_id: process.env.client_id,
+            client_secret: process.env.client_secret,
+            code: process.env.code,
+            grant_type: 'authorization_code',
+            redirect_uri: "http://localhost:3000"
+        })
+    });
+    const json = await response.json();
+    console.log(json);
+    if (json.status != 401 && json.status != 400) {
+        if (accessToken == null) {
+            accessToken = json.access_token;
         }
-        refreshToken = json.refresh_token;
-        expires_in = json.expires_in;
+        main("overlay", dst, accessToken);
+    } else {
+        console.log("refreshing token");
+        refresh(dst);
     }
-).then(() => {
-    main("overlay", "jack_xyz_");
-});
+}
+
+async function refresh(dst) {
+    const response = await fetch('https://id.twitch.tv/oauth2/token', {
+        method: 'POST',
+        body: new URLSearchParams({
+            client_id: process.env.client_id,
+            client_secret: process.env.client_secret,
+            grant_type: 'refresh_token',
+            refresh_token: process.env.refresh_token
+        })
+    });
+    const json = await response.json();
+    accessToken = json.access_token;
+    main("overlay", dst, accessToken);
+}
 
 const port = 3000;
-
-
-function main(user, dst) {
+function main(user, dst, accessToken) {
     client.on('connectFailed', function (error) {
         console.log('Connect Error: ' + error.toString());
     });
 
     client.on('connect', function (connection) {
         connection.send("CAP REQ :twitch.tv/commands twitch.tv/tags");
-        console.log(`PASS oauth:${accessToken}`);
         connection.send(`PASS oauth:${accessToken}`);
-        console.log(`NICK ${user}`);
         connection.send(`NICK ${user}`);
         connection.send(`JOIN #${dst}`);
 
@@ -71,10 +82,8 @@ function main(user, dst) {
         });
 
         connection.on('message', function (ircMessage) {
-            console.log(ircMessage);
             if (ircMessage.type === 'utf8') {
                 let rawIrcMessage = ircMessage.utf8Data.trimEnd();
-                console.log(rawIrcMessage);
 
                 let messages = rawIrcMessage.split('\r\n');  // The IRC message may contain one or more messages.
                 messages.forEach(message => {
@@ -83,7 +92,6 @@ function main(user, dst) {
                     if (parsedMessage) {
                         switch (parsedMessage.command.command) {
                             case 'PRIVMSG':
-                                console.log(parsedMessage.command);
                                 io.emit('chat', {
                                     text: parsedMessage.parameters,
                                     username: parsedMessage.tags['display-name'],
@@ -367,11 +375,8 @@ function parseSource(rawSourceComponent) {
         }
     }
 }
-/*
-io.on('connection', (socket) => {
-    console.log('a user connected');
-});
-*/
+
+init("jack_xyz_");
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
