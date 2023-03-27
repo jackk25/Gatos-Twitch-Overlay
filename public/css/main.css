@@ -10,7 +10,6 @@
 }
 
 .speechBubble {
-    word-break: break-all;
     hyphens: auto;
     font-family: 'Tilt Warp', cursive;
     position: absolute;
