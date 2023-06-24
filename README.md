@@ -1,6 +1,6 @@
 # Gatos-Twitch-Overlay
-A Twitch chat overlay built for MP_PocketNinja, which you can find on their stream!  
-This code **ONLY WORKS FOR THEIR STREAM**, do **NOT** attempt to run it in it's current form!
+A Twitch chat overlay built for MP_PocketNinja, which you can find on it's stream!  
+This code **ONLY WORKS FOR IT'S STREAM**, do **NOT** attempt to run the code in it's current form!
 
 ## Tools Used
 * Node.JS 💾
