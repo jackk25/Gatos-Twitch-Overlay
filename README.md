@@ -8,4 +8,3 @@ This code **ONLY WORKS FOR IT'S STREAM**, do **NOT** attempt to run the code in 
 * socket.js 🗣
 * websocket 🤝
 * node-fetch 📲
-* chicken nuggie 🐔
