@@ -1,18 +1,18 @@
 {
-  "name": "gatosoverlay",
+  "name": "pocketoverlayv2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "node-fetch": "^2.6.9",
-    "socket.io": "^4.6.1",
+    "socket.io": "^4.7.2",
+    "tmi.js": "^1.8.5",
     "websocket": "^1.0.34"
   }
 }

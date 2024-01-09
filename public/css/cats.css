@@ -1,0 +1,61 @@
+main {
+    display: flex;
+    justify-content: center;
+    width: 960px;
+}
+
+.chatEntity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    transition: all 1s;
+    inline-size: 200px;
+    padding: 0px;
+    position: relative; 
+}
+
+.speechBubble {
+    hyphens: auto;
+    font-family: 'Tilt Warp', cursive;
+    position: absolute;
+    bottom: 100px;
+    font-size: medium;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    display: none;
+    margin: 0px;
+}
+
+.speech {
+    left: -40px;
+}
+
+.marsh1 {
+    left: -100px;
+}
+
+.fire {
+    left: -172px;
+}
+
+.marsh2 {
+    left: -230px;
+}
+
+.fish {
+    left: -384px;
+}
+
+.chatEntity>img {
+    width: auto;
+    height: auto;
+}
+
+.chatText {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}

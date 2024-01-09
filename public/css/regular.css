@@ -1,0 +1,27 @@
+.roundedEdges {
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.chatEntry {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.usernameBox {
+    background-color: black;
+    margin-bottom: -5px;
+    z-index: 9999;
+}
+
+.chatBox {
+    background-color: white;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
